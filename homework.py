@@ -11,18 +11,18 @@ def get_status(user_id):
     params = {
         'user_ids':user_id,
         'v':5.92,
-        'access_token':os.getenv("access_token"),
+        'access_token':os.getenv('access_token'),
         'fields':'online'
     }
     url = 'https://api.vk.com/method/users.get'
     status = requests.post(url=url, params=params)
-    return status.json()["response"][0]['online'] 
+    return status.json()['response'][0]['online'] 
 
 
 def sms_sender(sms_text):
     load_dotenv()
-    account_sid = os.getenv("account_sid")
-    auth_token = os.getenv("token")
+    account_sid = os.getenv('account_sid')
+    auth_token = os.getenv('token')
     client = Client(account_sid, auth_token)
 
     message = client.messages.create(
@@ -34,8 +34,8 @@ def sms_sender(sms_text):
     return message.sid
 
 
-if __name__ == "__main__":
-    vk_id = input("Введите id ")
+if __name__ == '__main__':
+    vk_id = input('Введите id ')
     while True:
         if get_status(vk_id) == 1:
             sms_sender(f'{vk_id} сейчас онлайн!')
